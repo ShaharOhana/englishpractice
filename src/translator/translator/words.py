@@ -19,7 +19,7 @@ WORDS = {
     'adequate': ['נאות', 'כראוי'],
     'elect': 'לבחור',
     'gracious': 'אדיב',
-    'prominent': 'בולט',
+    'prominent': ['בולטות', 'בולט'],
     'desolate': ['מבודד', 'שומם'],
     'communal': 'עדתי',
     'rationalize': 'לייעל',
