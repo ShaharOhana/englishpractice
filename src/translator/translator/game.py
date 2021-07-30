@@ -82,6 +82,8 @@ def summary(mistakes: Dict[AnyStr, Dict[AnyStr, Union[AnyStr, List[AnyStr]]]], w
 
 def game_flow():
     user_choice, words_count = get_game_mode()
+    assert user_choice in GameMode.values(), Fore.RED + 'Game choice is not valid'
+    assert 1 <= words_count <= len(WORDS), Fore.RED + f'Invalid words count - should be between 1 to {len(WORDS)}'
 
     mistakes = play_game(user_choice, words_count)
     summary(mistakes, words_count)
