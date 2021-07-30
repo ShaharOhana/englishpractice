@@ -53,10 +53,11 @@ def play_game(game_mode: int, words_count: int) -> Dict[AnyStr, Dict[AnyStr, Uni
     for word, translation in words_list.items():
         counter += 1
         answer = input(Fore.WHITE + f'\n{counter}/{total_words}  {word} is -> ')
+
         if answer == HINT_CHAR:
             if game_mode == GameMode.WITH_HINTS:
                 print(Fore.LIGHTYELLOW_EX + f'The answer is: {translation}')
-                mistakes[word] = {'user': answer, 'correct': translation}
+                mistakes[word] = {'user': answer, 'correct': translation, 'is_hint': True}
             else:
                 print(Fore.RED + 'YOU CANT USE HINTS (sorry...)')
                 answer = input(Fore.WHITE + f'Try again: {word} is -> ')
@@ -66,7 +67,7 @@ def play_game(game_mode: int, words_count: int) -> Dict[AnyStr, Dict[AnyStr, Uni
             print(Fore.GREEN + 'Good Job!')
         elif answer != HINT_CHAR:
             print(Fore.WHITE + f'Don\'t worry, {word}\'s translation is: {translation}')
-            mistakes[word] = {'user': answer, 'correct': translation}
+            mistakes[word] = {'user': answer, 'correct': translation, 'is_hint': False}
 
     return mistakes
 
@@ -80,7 +81,12 @@ def summary(mistakes: Dict[AnyStr, Dict[AnyStr, Union[AnyStr, List[AnyStr]]]], w
     else:
         print(Fore.WHITE + 'Summary of your mistakes, and correct answers:')
         for word, answer in mistakes.items():
-            print(f"{word}: your answer was - {answer['user']}, the correct answer is: {answer['correct']}")
+            if answer['is_hint']:
+                user_answer = 'you used hint here'
+            else:
+                user_answer = f"your answer was - {answer['user']}"
+
+            print(f"{word}: {user_answer}, the correct answer is: {answer['correct']}")
 
 
 def game_flow():
