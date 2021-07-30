@@ -1,5 +1,7 @@
 from dataclasses import dataclass
 
+HINT_CHAR = '?'
+
 
 @dataclass
 class GameMode:

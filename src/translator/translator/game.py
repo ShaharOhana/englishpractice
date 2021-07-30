@@ -3,7 +3,7 @@ from typing import Tuple, Dict, AnyStr, Union, List
 
 from colorama import Fore
 
-from .consts import GameMode
+from .consts import GameMode, HINT_CHAR
 from .words import WORDS
 
 
@@ -46,11 +46,11 @@ def play_game(game_mode: int, words_count: int) -> Dict[AnyStr, Dict[AnyStr, Uni
 
     print(Fore.CYAN + '\n~~~ LET\'S PLAY! ~~~')
     if game_mode == GameMode.WITH_HINTS:
-        print(Fore.WHITE + 'Remember, if you need hint, enter (h) instead of answer')
+        print(Fore.WHITE + f'Remember, if you need hint, enter ({HINT_CHAR}) instead of answer')
 
     for word, translation in words_list.items():
         answer = input(Fore.WHITE + f'\n{word} is -> ')
-        if answer == 'h':
+        if answer == HINT_CHAR:
             if game_mode == GameMode.WITH_HINTS:
                 print(Fore.LIGHTYELLOW_EX + f'The answer is: {translation}')
                 mistakes[word] = {'user': answer, 'correct': translation}
@@ -61,7 +61,7 @@ def play_game(game_mode: int, words_count: int) -> Dict[AnyStr, Dict[AnyStr, Uni
         if (isinstance(translation, list) and answer in translation) or \
                 (isinstance(translation, str) and answer == translation):
             print(Fore.GREEN + 'Good Job!')
-        elif answer != 'h':
+        elif answer != HINT_CHAR:
             print(Fore.WHITE + f'Don\'t worry, {word}\'s translation is: {translation}')
             mistakes[word] = {'user': answer, 'correct': translation}
 
