@@ -53,21 +53,35 @@ def play_game(game_mode: int, words_count: int) -> Dict[AnyStr, Dict[AnyStr, Uni
         if answer == 'h':
             if game_mode == GameMode.WITH_HINTS:
                 print(Fore.LIGHTYELLOW_EX + f'The answer is: {translation}')
+                mistakes[word] = {'user': answer, 'correct': translation}
             else:
                 print(Fore.RED + 'YOU CANT USE HINTS (sorry...)')
                 answer = input(Fore.WHITE + f'Try again: {word} is -> ')
 
-        elif (isinstance(translation, list) and answer in translation) or \
+        if (isinstance(translation, list) and answer in translation) or \
                 (isinstance(translation, str) and answer == translation):
             print(Fore.GREEN + 'Good Job!')
-        else:
+        elif answer != 'h':
             print(Fore.WHITE + f'Don\'t worry, {word}\'s translation is: {translation}')
             mistakes[word] = {'user': answer, 'correct': translation}
 
     return mistakes
 
 
+def summary(mistakes: Dict[AnyStr, Dict[AnyStr, Union[AnyStr, List[AnyStr]]]], words_count: int) -> None:
+    print(Fore.CYAN + '\n~~~ GAME SUMMARY ~~~')
+    print(Fore.CYAN + f'Your result is: {words_count - len(mistakes)}/{words_count}')
+
+    if not mistakes:
+        print(Fore.LIGHTGREEN_EX + 'Awesome!! You know all the words!')
+    else:
+        print(Fore.WHITE + 'Summary of your mistakes, and correct answers:')
+        for word, answer in mistakes.items():
+            print(f"{word}: your answer was - {answer['user']}, the correct answer is: {answer['correct']}")
+
+
 def game_flow():
     user_choice, words_count = get_game_mode()
 
     mistakes = play_game(user_choice, words_count)
+    summary(mistakes, words_count)

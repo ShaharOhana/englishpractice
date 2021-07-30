@@ -71,5 +71,5 @@ WORDS = {
     'regally': 'באופן מלכותי',
     'conveyed': 'מועבר',
     'bewildered': 'נבוך',
-    'infant': 'תינוך'
+    'infant': 'תינוק'
 }
