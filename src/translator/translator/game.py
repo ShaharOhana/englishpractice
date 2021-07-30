@@ -42,6 +42,8 @@ def get_random_words(words_count: int) -> Dict[AnyStr, Union[AnyStr, List[AnyStr
 
 def play_game(game_mode: int, words_count: int) -> Dict[AnyStr, Dict[AnyStr, Union[AnyStr, List[AnyStr]]]]:
     words_list = WORDS if words_count == len(WORDS) else get_random_words(words_count)
+    total_words = len(words_list)
+    counter = 0
     mistakes = {}
 
     print(Fore.CYAN + '\n~~~ LET\'S PLAY! ~~~')
@@ -49,7 +51,8 @@ def play_game(game_mode: int, words_count: int) -> Dict[AnyStr, Dict[AnyStr, Uni
         print(Fore.WHITE + f'Remember, if you need hint, enter ({HINT_CHAR}) instead of answer')
 
     for word, translation in words_list.items():
-        answer = input(Fore.WHITE + f'\n{word} is -> ')
+        counter += 1
+        answer = input(Fore.WHITE + f'\n{counter}/{total_words}  {word} is -> ')
         if answer == HINT_CHAR:
             if game_mode == GameMode.WITH_HINTS:
                 print(Fore.LIGHTYELLOW_EX + f'The answer is: {translation}')
